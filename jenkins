@@ -3,13 +3,19 @@ pipeline{
     stages{
         stage("compilePhase"){
             steps{
-                bat "mvn compile"
+                bat "cd Security & mvn compile"
             }
         }
-        stage("packagePhase"){
+        stage("testPhase"){
             steps{
-                bat "mvn clean package"
-            }
+                bat "cd Security & mvn test"
+                 }
+        }
+        stage("packagingPhase"){
+            steps{
+                bat "cd Security & mvn clean package"
+                 }
         }
     }
 }
+>>>>>>> feature_amal
