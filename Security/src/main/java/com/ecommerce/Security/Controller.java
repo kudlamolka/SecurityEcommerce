@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import java.util.Base64;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -28,13 +29,14 @@ public class Controller{
     }
 
     @PostMapping("/encode")
-    public String encode(@RequestBody String password) throws Exception {
-        return AES.encrypt(password.getBytes(StandardCharsets.UTF_8),key,iv).toString();
+    public String encode(@RequestBody Password password) throws Exception {
+        byte res[] = AES.encrypt(password.getPassword().getBytes(StandardCharsets.UTF_8),key,iv);
+        return Base64.getEncoder().encodeToString(res);
     }
 
     @PostMapping("/decode")
-    public String decode(@RequestBody Holder data) throws Exception {
-        byte[] enc = data.hash.getBytes(StandardCharsets.UTF_8);
+    public String decode(@RequestBody Hash hash) throws Exception {
+        byte[] enc = Base64.getDecoder().decode(hash.getHash());
         return AES.decrypt(enc,key,iv);
     }
 }
