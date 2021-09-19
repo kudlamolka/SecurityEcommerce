@@ -4,18 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+
 public class Test {
 
-    static PasswordEncoder encoder = new BCryptPasswordEncoder();
+    public static void main(String[] args) throws Exception {
+        byte[] iv = AES.getIV();
+        SecretKey key = AES.getAESKey();
 
-    public static void main(String[] args) {
+        String ptext = "amal";
 
+        byte enc[] = AES.encrypt(ptext.getBytes(StandardCharsets.UTF_8),key,iv);
 
-        String pwd = "amal";
-        String p2 = "amal";
-        String hash = encoder.encode(pwd);
+        System.out.println(enc.toString());
 
+        String dec = AES.decrypt(enc,key,iv);
 
-        System.out.println(encoder.matches(p2,hash));
+        System.out.println(dec);
     }
 }

@@ -2,6 +2,7 @@ package com.ecommerce.Security;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+
 @EntityScan
 public class Holder {
     public String password;
