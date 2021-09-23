@@ -1,0 +1,21 @@
+pipeline{
+    agent any
+    stages{
+        stage("compilePhase"){
+            steps{
+                bat "cd Security & mvn compile"
+            }
+        }
+        stage("testPhase"){
+            steps{
+                bat "cd Security & mvn test"
+                 }
+        }
+        stage("packagingPhase"){
+            steps{
+                bat "cd Security & mvn clean package"
+                 }
+        }
+    }
+}
+>>>>>>> feature_amal
